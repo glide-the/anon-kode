@@ -2,9 +2,7 @@
 
 DESC: https://www.reddit.com/r/LocalLLaMA/comments/1kbamoh/dnakovanonkode_github_repo_taken_down_by_anthropic/
 
-
-https://github.com/user-attachments/assets/7a9253a7-8bb0-40d5-a3f3-5e6096d7c789
-
+modify model proiv：[ZAI_MODEL_SUPPORT](./ZAI_MODEL_SUPPORT.md)
 
 Terminal-based AI coding tool that can use any model that supports the OpenAI-style API.
 
