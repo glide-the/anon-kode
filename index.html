@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>红烧风筝 - 个人主页</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-citrus: #F49306;
+            --color-lush: #A5BB1A;
+            --color-flora: #F5CAE8;
+            --color-exotic: #E0858E;
+            --color-coral: #E63A26;
+            --color-ocean: #9EC6AA;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        
+        .serif-font {
+            font-family: 'Noto Serif SC', serif;
+        }
+        
+        @keyframes fadeInSlow {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fadeInSlow {
+            animation: fadeInSlow 0.8s ease-out forwards;
+        }
+        
+        .brand-handwriting {
+            font-family: 'Noto Serif SC', serif;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tropical-bg {
+            background-image: url('https://images.unsplash.com/photo-1515885608933-6a3a5a1f0dc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .tropical-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+        }
+        
+        .content-overlay {
+            position: relative;
+            z-index: 10;
+        }
+        
+        .color-card {
+            transition: all 0.3s ease;
+        }
+        
+        .color-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="tropical-bg min-h-screen">
+    <div class="content-overlay min-h-screen flex flex-col items-center justify-center p-4 md:p-8">
+        <!-- 品牌名称 M1 -->
+        <div class="w-full max-w-6xl mb-12 opacity-0 animate-fadeInSlow" style="animation-delay: 0.2s;">
+            <h1 class="brand-handwriting text-5xl md:text-7xl text-white text-center">红烧风筝</h1>
+            <p class="text-white text-xl md:text-2xl text-center mt-2">导演 · 创意内容创作者</p>
+        </div>
+        
+        <!-- 主要内容区 -->
+        <div class="w-full max-w-6xl bg-white bg-opacity-90 rounded-2xl shadow-2xl p-6 md:p-8 opacity-0 animate-fadeInSlow" style="animation-delay: 0.4s;">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- 个人信息 -->
+                <div class="md:col-span-2 space-y-6">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-4 text-gray-800">个人简介</h2>
+                        <p class="text-lg text-gray-700 leading-relaxed">
+                            资深视频编导，擅长叙事剧情短片和产品广告片创作，各类短片全平台（抖音快手为主）曝光1亿+。
+                            有着扎实的视听语言和剧本创作经验，现场导演调度经验。
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold mb-3 text-gray-800">成就与荣誉</h3>
+                        <ul class="space-y-2 text-gray-700">
+                            <li>• 2024年9月全国短剧本大赛金奖</li>
+                            <li>• 2025年3月VIDU千万SIP小说影视化AI改编比赛优秀奖</li>
+                            <li>• WaytoAGI社区超级创作者</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold mb-3 text-gray-800">专业技能</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">项目管理&交付</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">文案策划 / 脚本创作</span>
+                            <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">新媒体运营（国内平台）</span>
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">绘图、美学</span>
+                            <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">影视（导演/编剧/摄影/动作设计等）</span>
+                            <span class="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-sm">视频制作/后期/剪辑</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 基本信息 -->
+                <div class="space-y-4">
+                    <div class="bg-gray-50 p-4 rounded-xl">
+                        <h3 class="text-xl font-bold mb-3 text-gray-800">基本信息</h3>
+                        <ul class="space-y-3">
+                            <li class="flex">
+                                <span class="text-gray-600 w-24">所在地:</span>
+                                <span class="font-medium">深圳</span>
+                            </li>
+                            <li class="flex">
+                                <span class="text-gray-600 w-24">身份:</span>
+                                <span class="font-medium">超级创作者</span>
+                            </li>
+                            <li class="flex">
+                                <span class="text-gray-600 w-24">平台:</span>
+                                <span class="font-medium">抖音 3K~1W</span>
+                            </li>
+                            <li class="flex">
+                                <span class="text-gray-600 w-24">抖音号:</span>
+                                <span class="font-medium">红烧风筝</span>
+                            </li>
+                            <li class="flex">
+                                <span class="text-gray-600 w-24">邮箱:</span>
+                                <span class="font-medium text-sm">976329622@qq.com</span>
+                            </li>
+                            <li class="flex">
+                                <span class="text-gray-600 w-24">访问量:</span>
+                                <span class="font-medium">76875 (2025/07/09)</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 色卡展示区 M3.3 -->
+        <div class="w-full max-w-4xl mt-12 opacity-0 animate-fadeInSlow" style="animation-delay: 0.6s;">
+            <h2 class="text-3xl font-bold mb-8 text-white text-center">创意色彩方案</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- 色卡 1 -->
+                <div class="color-card transform rotate-[-3deg] w-full p-4 rounded-xl shadow-lg" style="background-color: var(--color-citrus);">
+                    <div class="text-white font-bold text-2xl mb-1 tracking-wide serif-font">热情</div>
+                    <div class="text-white text-sm font-mono">HEX #F49306</div>
+                    <div class="text-white text-sm font-mono">RGB 244 147 6</div>
+                    <div class="text-white text-sm font-mono">CMYK 0 40 98 4</div>
+                </div>
+                
+                <!-- 色卡 2 -->
+                <div class="color-card transform rotate-[2deg] w-full p-4 rounded-xl shadow-lg mt-[-1.5rem]" style="background-color: var(--color-exotic);">
+                    <div class="text-white font-bold text-2xl mb-1 tracking-wide serif-font">创意</div>
+                    <div class="text-white text-sm font-mono">HEX #E0858E</div>
+                    <div class="text-white text-sm font-mono">RGB 224 133 142</div>
+                    <div class="text-white text-sm font-mono">CMYK 0 41 37 12</div>
+                </div>
+                
+                <!-- 色卡 3 -->
+                <div class="color-card transform rotate-[-2deg] w-full p-4 rounded-xl shadow-lg mt-[-1.5rem]" style="background-color: var(--color-lush);">
+                    <div class="text-white font-bold text-2xl mb-1 tracking-wide serif-font">生机</div>
+                    <div class="text-white text-sm font-mono">HEX #A5BB1A</div>
+                    <div class="text-white text-sm font-mono">RGB 165 187 26</div>
+                    <div class="text-white text-sm font-mono">CMYK 12 0 86 27</div>
+                </div>
+                
+                <!-- 色卡 4 -->
+                <div class="color-card transform rotate-[3deg] w-full p-4 rounded-xl shadow-lg mt-[-1.5rem]" style="background-color: var(--color-flora);">
+                    <div class="text-white font-bold text-2xl mb-1 tracking-wide serif-font">灵感</div>
+                    <div class="text-white text-sm font-mono">HEX #F5CAE8</div>
+                    <div class="text-white text-sm font-mono">RGB 245 202 232</div>
+                    <div class="text-white text-sm font-mono">CMYK 0 18 5 4</div>
+                </div>
+                
+                <!-- 色卡 5 -->
+                <div class="color-card transform rotate-[-1deg] w-full p-4 rounded-xl shadow-lg mt-[-1.5rem]" style="background-color: var(--color-ocean);">
+                    <div class="text-white font-bold text-2xl mb-1 tracking-wide serif-font">深度</div>
+                    <div class="text-white text-sm font-mono">HEX #9EC6AA</div>
+                    <div class="text-white text-sm font-mono">RGB 158 198 170</div>
+                    <div class="text-white text-sm font-mono">CMYK 20 0 14 22</div>
+                </div>
+                
+                <!-- 色卡 6 -->
+                <div class="color-card transform rotate-[1deg] w-full p-4 rounded-xl shadow-lg mt-[-1.5rem]" style="background-color: var(--color-coral);">
+                    <div class="text-white font-bold text-2xl mb-1 tracking-wide serif-font">活力</div>
+                    <div class="text-white text-sm font-mono">HEX #E63A26</div>
+                    <div class="text-white text-sm font-mono">RGB 230 58 38</div>
+                    <div class="text-white text-sm font-mono">CMYK 0 75 83 10</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 页脚 -->
+        <div class="w-full max-w-6xl mt-12 mb-8 text-center text-white opacity-0 animate-fadeInSlow" style="animation-delay: 0.8s;">
+            <p>© 2025 红烧风筝. 保留所有权利.</p>
+            <p class="text-sm mt-2 text-gray-300">"我其实比较渴望，或者说极度盼望，能有一天，把我获奖的那部剧本，落地，上线"</p>
+        </div>
+    </div>
+</body>
+</html>
