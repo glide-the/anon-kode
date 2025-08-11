@@ -9,12 +9,16 @@ RUN apk add --no-cache \
     bash \
     git \
     python3 \
+    py3-pip \
     make \
     g++ \
     curl
 
 # Configure npm to use China registry
 RUN npm config set registry https://registry.npmmirror.com/
+
+# Configure pip to use Tsinghua mirror
+RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 # Install bun
 RUN curl -fsSL https://bun.sh/install | bash
@@ -51,7 +55,17 @@ FROM node:18-alpine AS runtime
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 
 # Install runtime dependencies
-RUN apk add --no-cache bash
+RUN apk add --no-cache \
+    bash \
+    git \
+    python3 \
+    py3-pip \
+    make \
+    g++ \
+    curl
+
+# Configure pip to use Tsinghua mirror
+RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 WORKDIR /workspace
 
