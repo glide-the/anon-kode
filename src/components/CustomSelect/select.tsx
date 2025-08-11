@@ -5,27 +5,10 @@ import { type Theme } from './theme'
 import { useSelectState } from './use-select-state'
 import { useSelect } from './use-select'
 import { Option, useComponentTheme } from '@inkjs/ui'
+import { type OptionSubtree, type OptionHeader, optionHeaderKey } from './types'
 
-export type OptionSubtree = {
-  /**
-   * Header to show above sub-options.
-   */
-  readonly header?: string
-
-  /**
-   * Options.
-   */
-  readonly options: (Option | OptionSubtree)[]
-}
-
-export type OptionHeader = {
-  readonly header: string
-
-  readonly optionValues: string[]
-}
-
-export const optionHeaderKey = (optionHeader: OptionHeader): string =>
-  `HEADER-${optionHeader.optionValues.join(',')}`
+export type { OptionSubtree, OptionHeader } from './types'
+export { optionHeaderKey } from './types'
 
 export type SelectProps = {
   /**

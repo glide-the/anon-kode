@@ -7,7 +7,7 @@ import {
 import { isUnsafeCompoundCommand } from '../../utils/commands'
 import { getCwd } from '../../utils/state'
 import { getTheme } from '../../utils/theme'
-import { type OptionSubtree } from '../CustomSelect/select'
+import { type OptionSubtree } from '../CustomSelect/types'
 
 /**
  * Generates options for the tool use confirmation dialog

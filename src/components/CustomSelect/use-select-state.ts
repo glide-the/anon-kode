@@ -9,7 +9,7 @@ import {
 } from 'react'
 import OptionMap from './option-map'
 import { Option } from '@inkjs/ui'
-import type { OptionHeader, OptionSubtree } from './select'
+import type { OptionHeader, OptionSubtree } from './types'
 
 type State = {
   /**
