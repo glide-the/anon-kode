@@ -1,6 +1,11 @@
 import { Box } from 'ink'
 import * as React from 'react'
-import type { AssistantMessage, Message, UserMessage } from '../query'
+import type {
+  AssistantMessage,
+  Message,
+  UserMessage,
+  NormalizedMessage,
+} from '../messageTypes'
 import type {
   ContentBlock,
   DocumentBlockParam,
@@ -16,7 +21,6 @@ import { UserToolResultMessage } from './messages/UserToolResultMessage/UserTool
 import { AssistantToolUseMessage } from './messages/AssistantToolUseMessage'
 import { AssistantTextMessage } from './messages/AssistantTextMessage'
 import { UserTextMessage } from './messages/UserTextMessage'
-import { NormalizedMessage } from '../utils/messages'
 import { AssistantThinkingMessage } from './messages/AssistantThinkingMessage'
 import { AssistantRedactedThinkingMessage } from './messages/AssistantRedactedThinkingMessage'
 import { useTerminalSize } from '../hooks/useTerminalSize'

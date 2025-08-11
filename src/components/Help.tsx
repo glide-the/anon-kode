@@ -1,4 +1,4 @@
-import { Command } from '../commands'
+import { Command } from '../commandTypes'
 import { PRODUCT_COMMAND, PRODUCT_NAME } from '../constants/product'
 import * as React from 'react'
 import { Box, Text, useInput } from 'ink'

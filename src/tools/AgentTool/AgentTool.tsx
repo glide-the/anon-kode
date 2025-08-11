@@ -9,7 +9,11 @@ import { FallbackToolUseRejectedMessage } from '../../components/FallbackToolUse
 import { getAgentPrompt } from '../../constants/prompts'
 import { getContext } from '../../context'
 import { hasPermissionsToUseTool } from '../../permissions'
-import { AssistantMessage, Message as MessageType, query } from '../../query'
+import { query } from '../../query'
+import type {
+  AssistantMessage,
+  Message as MessageType,
+} from '../../messageTypes'
 import { formatDuration, formatNumber } from '../../utils/format'
 import {
   getMessagesPath,

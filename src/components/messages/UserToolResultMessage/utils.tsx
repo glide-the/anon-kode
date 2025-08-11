@@ -1,5 +1,5 @@
 import { ToolUseBlockParam } from '@anthropic-ai/sdk/resources/index.mjs'
-import { Message } from '../../../query'
+import type { Message } from '../../../messageTypes'
 import { useMemo } from 'react'
 import { Tool } from '../../../Tool'
 import { GlobTool } from '../../../tools/GlobTool/GlobTool'

@@ -2,7 +2,13 @@ import { Box, Text } from 'ink'
 import { OutputLine } from './OutputLine'
 import React from 'react'
 import { getTheme } from '../../utils/theme'
-import { Out as BashOut } from './BashTool'
+
+type BashOut = {
+  stdout: string
+  stdoutLines: number
+  stderr: string
+  stderrLines: number
+}
 
 type Props = {
   content: Omit<BashOut, 'interrupted'>

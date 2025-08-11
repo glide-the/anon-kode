@@ -1,4 +1,4 @@
-import type { Command } from '../commands'
+import type { Command } from '../commandTypes'
 import type { Tool } from '../Tool'
 import Table from 'cli-table3'
 import { getSystemPrompt } from '../constants/prompts'

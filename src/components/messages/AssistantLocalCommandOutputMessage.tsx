@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { extractTag } from '../../utils/messages'
+import { extractTag } from '../../utils/extractTag'
 import { getTheme } from '../../utils/theme'
 import { Box, Text } from 'ink'
 

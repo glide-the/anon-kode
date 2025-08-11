@@ -1,8 +1,8 @@
 import { default as React, useCallback } from 'react'
 import { useNotifyAfterTimeout } from '../../hooks/useNotifyAfterTimeout'
-import { AssistantMessage, BinaryFeedbackResult } from '../../query'
+import type { AssistantMessage, BinaryFeedbackResult } from '../../messageTypes'
 import type { Tool } from '../../Tool'
-import type { NormalizedMessage } from '../../utils/messages'
+import type { NormalizedMessage } from '../../messageTypes'
 import { BinaryFeedbackView } from './BinaryFeedbackView'
 import {
   type BinaryFeedbackChoose,

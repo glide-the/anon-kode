@@ -1,4 +1,4 @@
-import type { Command } from '../commands'
+import type { Command } from '../commandTypes'
 import { markProjectOnboardingComplete } from '../utils/projectOnboarding'
 import { PROJECT_FILE } from '../constants/product'
 const command = {

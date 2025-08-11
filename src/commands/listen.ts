@@ -1,4 +1,4 @@
-import { Command } from '../commands'
+import { Command } from '../commandTypes'
 import { logError } from '../utils/log'
 import { execFileNoThrow } from '../utils/execFileNoThrow'
 

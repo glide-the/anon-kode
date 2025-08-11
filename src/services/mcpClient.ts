@@ -35,7 +35,7 @@ import { memoize, pickBy } from 'lodash-es'
 import type { Tool } from '../Tool'
 import { MCPTool } from '../tools/MCPTool/MCPTool'
 import { logMCPError } from '../utils/log'
-import { Command } from '../commands'
+import { Command } from '../commandTypes'
 import { logEvent } from '../services/statsig'
 import { PRODUCT_COMMAND } from '../constants/product.js'
 

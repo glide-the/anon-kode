@@ -22,52 +22,23 @@ import {
   createProgressMessage,
   createToolResultStopMessage,
   createUserMessage,
-  FullToolUseResult,
   INTERRUPT_MESSAGE,
   INTERRUPT_MESSAGE_FOR_TOOL_USE,
-  NormalizedMessage,
   normalizeMessagesForAPI,
 } from './utils/messages.js'
+import type {
+  AssistantMessage,
+  BinaryFeedbackResult,
+  Message,
+  ProgressMessage,
+  UserMessage,
+  FullToolUseResult,
+  NormalizedMessage,
+} from './messageTypes'
 import { BashTool } from './tools/BashTool/BashTool'
 import { getCwd } from './utils/state'
 
 export type Response = { costUSD: number; response: string }
-export type UserMessage = {
-  message: MessageParam
-  type: 'user'
-  uuid: UUID
-  toolUseResult?: FullToolUseResult
-  options?: {
-    isKodingRequest?: boolean
-    kodingContext?: string
-  }
-}
-
-export type AssistantMessage = {
-  costUSD: number
-  durationMs: number
-  message: APIAssistantMessage
-  type: 'assistant'
-  uuid: UUID
-  isApiErrorMessage?: boolean
-}
-
-export type BinaryFeedbackResult =
-  | { message: AssistantMessage | null; shouldSkipPermissionCheck: false }
-  | { message: AssistantMessage; shouldSkipPermissionCheck: true }
-
-export type ProgressMessage = {
-  content: AssistantMessage
-  normalizedMessages: NormalizedMessage[]
-  siblingToolUseIDs: Set<string>
-  tools: Tool[]
-  toolUseID: string
-  type: 'progress'
-  uuid: UUID
-}
-
-// Each array item is either a single message or a message-and-response pair
-export type Message = UserMessage | AssistantMessage | ProgressMessage
 
 const MAX_TOOL_USE_CONCURRENCY = 10
 
@@ -517,3 +488,13 @@ function formatError(error: unknown): string {
   const end = fullMessage.slice(-halfLength)
   return `${start}\n\n... [${fullMessage.length - 10000} characters truncated] ...\n\n${end}`
 }
+
+export type {
+  AssistantMessage,
+  BinaryFeedbackResult,
+  Message,
+  ProgressMessage,
+  UserMessage,
+  FullToolUseResult,
+  NormalizedMessage,
+} from './messageTypes'

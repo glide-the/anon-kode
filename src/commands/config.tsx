@@ -1,4 +1,4 @@
-import { Command } from '../commands'
+import { Command } from '../commandTypes'
 import { Config } from '../components/Config'
 import * as React from 'react'
 
