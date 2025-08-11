@@ -357,6 +357,7 @@ ${commandList}`,
       'Skip all permission checks. Only works in Docker containers with no internet access. Will crash otherwise.',
       () => true,
     )
+    .showHelpOnEmpty(true)
     .action(
       async (
         prompt,
@@ -391,6 +392,19 @@ ${commandList}`,
         ])
         // logStartup()
         const inputPrompt = [prompt, stdinContent].filter(Boolean).join('\n')
+        
+        // 检查是否为TTY环境
+        const isTTY = process.stdin.isTTY && process.stdout.isTTY
+        
+        // 非TTY环境自动降级为 --print 模式
+        if (!isTTY && !print) {
+          if (!inputPrompt) {
+            console.error("No TTY detected. Use `-p/--print` with a prompt or pipe input.")
+            process.exit(1)
+          }
+          print = true
+        }
+        
         if (print) {
           if (!inputPrompt) {
             console.error(
