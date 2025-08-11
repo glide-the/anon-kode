@@ -16,7 +16,7 @@ import { readFile } from 'fs/promises'
 import { existsSync } from 'fs'
 import { getSlowAndCapableModel } from './utils/model'
 import { lastX } from './utils/generators'
-import { getGitEmail } from './utils/user'
+import { getGitEmail } from './utils/git'
 import { PROJECT_FILE } from './constants/product'
 /**
  * Find all KODING.md files in the current working directory

@@ -1,5 +1,6 @@
 import { memoize } from 'lodash-es'
 import { execFileNoThrow } from './execFileNoThrow'
+import { logError } from './log'
 
 export const getIsGit = memoize(async (): Promise<boolean> => {
   const { code } = await execFileNoThrow('git', [
@@ -7,6 +8,15 @@ export const getIsGit = memoize(async (): Promise<boolean> => {
     '--is-inside-work-tree',
   ])
   return code === 0
+})
+
+export const getGitEmail = memoize(async (): Promise<string | undefined> => {
+  const result = await execFileNoThrow('git', ['config', 'user.email'])
+  if (result.code !== 0) {
+    logError(`Failed to get git email: ${result.stdout} ${result.stderr}`)
+    return undefined
+  }
+  return result.stdout.trim() || undefined
 })
 
 export const getHead = async (): Promise<string> => {
