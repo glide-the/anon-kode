@@ -849,7 +849,7 @@ async function queryOpenAI(
         opts.reasoning_effort = reasoningEffort
       }
 
-      console.log('opts:', JSON.stringify(opts, null, 2))
+      // console.log('opts:', JSON.stringify(opts, null, 2))
       const s = await getCompletion(modelType, opts)
       let finalResponse
       if (opts.stream) {
