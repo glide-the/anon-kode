@@ -25,7 +25,7 @@
   ],
   "scripts": {
     "dev": "tsx ./src/entrypoints/cli.tsx --verbose",
-    "build": "bun build ./src/entrypoints/cli.tsx --outfile=\"$(pwd)/cli.mjs\" --target=node --format=esm --sourcemap ",
+    "build": "bun build ./src/entrypoints/cli.tsx  --outdir=. --target=node --format=esm --sourcemap  && mv cli.js cli.mjs  && mv cli.js.map cli.mjs.map",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json}\"",
     "compile": "bun build ./src/entrypoints/cli.tsx --compile --outfile dist-bin/kode --target=node --format=esm && cp yoga.wasm dist-bin/"

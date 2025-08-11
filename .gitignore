@@ -176,3 +176,4 @@ dist
 source-maps/
 cli.mjs
 dist-bin
+cli.mjs.map
