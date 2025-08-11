@@ -25,7 +25,7 @@
   ],
   "scripts": {
     "dev": "tsx ./src/entrypoints/cli.tsx --verbose",
-    "build": "bun build src/entrypoints/cli.tsx --outfile=cli.mjs --target=node --format=esm --sourcemap --external:@img/sharp-* --external:fsevents",
+    "build": "bun build ./src/entrypoints/cli.tsx --outfile=\"$(pwd)/cli.mjs\" --target=node --format=esm --sourcemap ",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json}\""
   },

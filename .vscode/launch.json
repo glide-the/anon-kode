@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Debug CLI",
+        "program": "${workspaceFolder}/cli.mjs",
+        "cwd": "${workspaceFolder}",
+        "runtimeArgs": [
+          "--enable-source-maps"
+        ],
+        "env": {
+          "NODE_NO_WARNINGS": "1"
+        },
+        "console": "integratedTerminal",
+        "skipFiles": [
+          "<node_internals>/**"
+        ]
+      }
+    ]
+  }
+  
