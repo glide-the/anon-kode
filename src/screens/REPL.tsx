@@ -1,8 +1,7 @@
 import { ToolUseBlockParam } from '@anthropic-ai/sdk/resources/index.mjs'
 import { Box, Newline, Static } from 'ink'
-import ProjectOnboarding, {
-  markProjectOnboardingComplete,
-} from '../ProjectOnboarding.js'
+import ProjectOnboarding from '../ProjectOnboarding.js'
+import { markProjectOnboardingComplete } from '../utils/projectOnboarding'
 import { CostThresholdDialog } from '../components/CostThresholdDialog'
 import * as React from 'react'
 import { useEffect, useMemo, useRef, useState, useCallback } from 'react'
