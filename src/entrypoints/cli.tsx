@@ -303,7 +303,7 @@ async function main() {
         const ttyFd = openSync('/dev/tty', 'r')
         renderContext = { ...renderContext, stdin: new ReadStream(ttyFd) }
       } catch (err) {
-        logError(`Could not open /dev/tty: ${err}`)
+        console.error(`Could not open /dev/tty: ${err}`)
       }
     }
   }
@@ -392,19 +392,21 @@ ${commandList}`,
         ])
         // logStartup()
         const inputPrompt = [prompt, stdinContent].filter(Boolean).join('\n')
-        
+
         // 检查是否为TTY环境
         const isTTY = process.stdin.isTTY && process.stdout.isTTY
-        
+
         // 非TTY环境自动降级为 --print 模式
         if (!isTTY && !print) {
           if (!inputPrompt) {
-            console.error("No TTY detected. Use `-p/--print` with a prompt or pipe input.")
+            console.error(
+              'No TTY detected. Use `-p/--print` with a prompt or pipe input.',
+            )
             process.exit(1)
           }
           print = true
         }
-        
+
         if (print) {
           if (!inputPrompt) {
             console.error(
