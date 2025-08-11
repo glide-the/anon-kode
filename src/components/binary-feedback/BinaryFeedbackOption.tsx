@@ -1,15 +1,12 @@
 import { FileEditTool } from '../../tools/FileEditTool/FileEditTool'
 import { FileEditToolDiff } from '../permissions/FileEditPermissionRequest/FileEditToolDiff'
 import { Message } from '../Message'
-import {
-  normalizeMessages,
-  type NormalizedMessage,
-} from '../../utils/messages.js'
+import { normalizeMessages } from '../../utils/messages.js'
+import type { NormalizedMessage, AssistantMessage } from '../../messageTypes'
 import type { Tool } from '../../Tool'
 import { useTerminalSize } from '../../hooks/useTerminalSize'
 import { FileWriteTool } from '../../tools/FileWriteTool/FileWriteTool'
 import { FileWriteToolDiff } from '../permissions/FileWritePermissionRequest/FileWriteToolDiff'
-import type { AssistantMessage } from '../../query'
 import * as React from 'react'
 import { Box } from 'ink'
 

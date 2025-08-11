@@ -17,59 +17,11 @@ import pr_comments from './commands/pr_comments'
 import releaseNotes from './commands/release-notes'
 import review from './commands/review'
 import terminalSetup from './commands/terminalSetup'
-import { Tool, ToolUseContext } from './Tool'
 import resume from './commands/resume'
 import { getMCPCommands } from './services/mcpClient'
-import type { MessageParam } from '@anthropic-ai/sdk/resources/index.mjs'
 import { memoize } from 'lodash-es'
-import type { Message } from './query'
 import { isAnthropicAuthEnabled } from './utils/auth'
-
-type PromptCommand = {
-  type: 'prompt'
-  progressMessage: string
-  argNames?: string[]
-  getPromptForCommand(args: string): Promise<MessageParam[]>
-}
-
-type LocalCommand = {
-  type: 'local'
-  call(
-    args: string,
-    context: {
-      options: {
-        commands: Command[]
-        tools: Tool[]
-        slowAndCapableModel: string
-      }
-      abortController: AbortController
-      setForkConvoWithMessagesOnTheNextRender: (
-        forkConvoWithMessages: Message[],
-      ) => void
-    },
-  ): Promise<string>
-}
-
-type LocalJSXCommand = {
-  type: 'local-jsx'
-  call(
-    onDone: (result?: string) => void,
-    context: ToolUseContext & {
-      setForkConvoWithMessagesOnTheNextRender: (
-        forkConvoWithMessages: Message[],
-      ) => void
-    },
-  ): Promise<React.ReactNode>
-}
-
-export type Command = {
-  description: string
-  isEnabled: boolean
-  isHidden: boolean
-  name: string
-  aliases?: string[]
-  userFacingName(): string
-} & (PromptCommand | LocalCommand | LocalJSXCommand)
+import type { Command } from './commandTypes'
 
 const INTERNAL_ONLY_COMMANDS = [ctx_viz, resume, listen]
 

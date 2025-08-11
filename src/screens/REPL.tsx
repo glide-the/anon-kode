@@ -5,7 +5,7 @@ import { markProjectOnboardingComplete } from '../utils/projectOnboarding'
 import { CostThresholdDialog } from '../components/CostThresholdDialog'
 import * as React from 'react'
 import { useEffect, useMemo, useRef, useState, useCallback } from 'react'
-import { Command } from '../commands'
+import { Command } from '../commandTypes'
 import { Logo } from '../components/Logo'
 import { Message } from '../components/Message'
 import { MessageResponse } from '../components/MessageResponse'
@@ -26,13 +26,14 @@ import { useCancelRequest } from '../hooks/useCancelRequest'
 import useCanUseTool from '../hooks/useCanUseTool'
 import { useLogMessages } from '../hooks/useLogMessages'
 import { setMessagesGetter, setMessagesSetter } from '../messages'
-import {
-  type AssistantMessage,
-  type BinaryFeedbackResult,
-  type Message as MessageType,
-  type ProgressMessage,
-  query,
-} from '../query.js'
+import { query } from '../query.js'
+import type {
+  AssistantMessage,
+  BinaryFeedbackResult,
+  Message as MessageType,
+  ProgressMessage,
+  NormalizedMessage,
+} from '../messageTypes'
 import type { WrappedClient } from '../services/mcpClient'
 import type { Tool } from '../Tool'
 import { AutoUpdaterResult } from '../utils/autoUpdater'
@@ -47,13 +48,12 @@ import {
   getUnresolvedToolUseIDs,
   INTERRUPT_MESSAGE,
   isNotEmptyMessage,
-  type NormalizedMessage,
   normalizeMessages,
   normalizeMessagesForAPI,
   processUserInput,
   reorderMessages,
-  extractTag,
 } from '../utils/messages.js'
+import { extractTag } from '../utils/extractTag'
 import { getSlowAndCapableModel } from '../utils/model'
 import { clearTerminal, updateTerminalTitle } from '../utils/terminal'
 import { BinaryFeedback } from '../components/binary-feedback/BinaryFeedback'

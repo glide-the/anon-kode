@@ -1,5 +1,5 @@
 import React from 'react'
-import type { Command } from '../commands'
+import type { Command } from '../commandTypes'
 import { Doctor } from '../screens/Doctor'
 import { PRODUCT_NAME } from '../constants/product'
 

@@ -11,13 +11,29 @@ import './browserMocks.js' // Initialize browser mocks
 import { FileSystemStorageProvider } from './statsigStorage'
 import { STATSIG_CLIENT_KEY } from '../constants/keys'
 import { env } from '../utils/env'
-import { getUser } from '../utils/user'
 import { logError } from '../utils/log'
 import { SESSION_ID } from '../utils/log'
-import { getBetas } from '../utils/betas'
 import { MACRO } from '../constants/macros'
+import {
+  GATE_TOKEN_EFFICIENT_TOOLS,
+  BETA_HEADER_TOKEN_EFFICIENT_TOOLS,
+  CLAUDE_CODE_20250219_BETA_HEADER,
+} from '../constants/betas'
 const gateValues: Record<string, boolean> = {}
 let client: StatsigClient | null = null
+
+const getBetas = memoize(async (): Promise<string[]> => {
+  const betaHeaders = [CLAUDE_CODE_20250219_BETA_HEADER]
+
+  if (process.env.USER_TYPE === 'ant' || process.env.SWE_BENCH) {
+    const useTokenEfficientTools = await checkGate(GATE_TOKEN_EFFICIENT_TOOLS)
+    if (useTokenEfficientTools) {
+      betaHeaders.push(BETA_HEADER_TOKEN_EFFICIENT_TOOLS)
+    }
+  }
+
+  return betaHeaders
+})
 
 export const initializeStatsig = memoize(
   async (): Promise<StatsigClient | null> => {
@@ -25,6 +41,7 @@ export const initializeStatsig = memoize(
       return null
     }
 
+    const { getUser } = await import('../utils/' + 'user')
     const user = await getUser()
     const options: StatsigOptions = {
       networkConfig: {

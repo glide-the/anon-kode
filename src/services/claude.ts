@@ -8,7 +8,7 @@ import { createHash, randomUUID } from 'crypto'
 import 'dotenv/config'
 
 import { addToTotalCost } from '../cost-tracker'
-import type { AssistantMessage, UserMessage } from '../query'
+import type { AssistantMessage, UserMessage } from '../messageTypes'
 import { Tool } from '../Tool'
 import {
   getAnthropicApiKey,
@@ -848,7 +848,7 @@ async function queryOpenAI(
         })
         opts.reasoning_effort = reasoningEffort
       }
-      
+
       console.log('opts:', JSON.stringify(opts, null, 2))
       const s = await getCompletion(modelType, opts)
       let finalResponse

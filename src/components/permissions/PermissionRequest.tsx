@@ -1,7 +1,7 @@
 import { useInput } from 'ink'
 import * as React from 'react'
 import { Tool } from '../../Tool'
-import { AssistantMessage } from '../../query'
+import type { AssistantMessage } from '../../messageTypes'
 import { FileEditTool } from '../../tools/FileEditTool/FileEditTool'
 import { FileWriteTool } from '../../tools/FileWriteTool/FileWriteTool'
 import { BashTool } from '../../tools/BashTool/BashTool'

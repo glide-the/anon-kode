@@ -1,4 +1,4 @@
-import { Command } from '../commands'
+import { Command } from '../commandTypes'
 import { BashTool } from '../tools/BashTool/BashTool'
 
 export default {

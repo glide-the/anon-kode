@@ -1,5 +1,5 @@
 import { MACRO } from '../constants/macros.js'
-import type { Command } from '../commands'
+import type { Command } from '../commandTypes'
 import { RELEASE_NOTES } from '../constants/releaseNotes'
 
 const releaseNotes: Command = {

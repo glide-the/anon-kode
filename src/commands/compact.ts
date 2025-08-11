@@ -1,4 +1,4 @@
-import { Command } from '../commands'
+import { Command } from '../commandTypes'
 import { getContext } from '../context'
 import { getMessagesGetter, getMessagesSetter } from '../messages'
 import { API_ERROR_MESSAGE_PREFIX, querySonnet } from '../services/claude'

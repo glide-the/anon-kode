@@ -6,8 +6,16 @@ import { spawn, execSync, type ChildProcess } from 'child_process'
 import { isAbsolute, resolve, join } from 'path'
 import { logError } from './log'
 import * as os from 'os'
-import { logEvent } from '../services/statsig'
 import { PRODUCT_COMMAND } from '../constants/product'
+
+function logEvent(
+  eventName: string,
+  metadata: { [key: string]: string | undefined },
+): void {
+  import('../services/statsig').then(({ logEvent }) =>
+    logEvent(eventName, metadata),
+  )
+}
 
 type ExecResult = {
   stdout: string

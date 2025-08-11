@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Tool } from '../../../Tool'
-import { Message } from '../../../query'
+import type { Message } from '../../../messageTypes'
 import { FallbackToolUseRejectedMessage } from '../../FallbackToolUseRejectedMessage'
 import { useGetToolFromMessages } from './utils'
 import { useTerminalSize } from '../../../hooks/useTerminalSize'

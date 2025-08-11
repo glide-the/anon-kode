@@ -13,7 +13,7 @@ import {
   normalizeMessages,
 } from '../utils/messages.js'
 import { logEvent } from '../services/statsig'
-import type { AssistantMessage, UserMessage } from '../query'
+import type { AssistantMessage, UserMessage } from '../messageTypes'
 import { useExitOnCtrlCD } from '../hooks/useExitOnCtrlCD'
 
 type Props = {

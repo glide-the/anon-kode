@@ -1,4 +1,4 @@
-import type { Command } from '../commands'
+import type { Command } from '../commandTypes'
 import { listMCPServers, getClients } from '../services/mcpClient'
 import { PRODUCT_COMMAND } from '../constants/product'
 import chalk from 'chalk'

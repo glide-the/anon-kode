@@ -1,4 +1,4 @@
-import { Message } from '../query'
+import type { Message } from '../messageTypes'
 import { SYNTHETIC_ASSISTANT_MESSAGES } from './messages'
 
 export function countTokens(messages: Message[]): number {

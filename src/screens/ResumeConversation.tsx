@@ -6,7 +6,7 @@ import { LogSelector } from '../components/LogSelector'
 import type { LogOption } from '../types/logs'
 import { logError, getNextAvailableLogForkNumber } from '../utils/log'
 import type { Tool } from '../Tool'
-import { Command } from '../commands'
+import { Command } from '../commandTypes'
 import { isDefaultSlowAndCapableModel } from '../utils/model'
 
 type Props = {
