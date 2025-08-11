@@ -175,3 +175,4 @@ dist
 .DS_Store
 source-maps/
 cli.mjs
+dist-bin
