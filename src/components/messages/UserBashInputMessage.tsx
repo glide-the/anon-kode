@@ -1,6 +1,6 @@
 import { Box, Text } from 'ink'
 import * as React from 'react'
-import { extractTag } from '../../utils/messages'
+import { extractTag } from '../../utils/extractTag'
 import { getTheme } from '../../utils/theme'
 import { TextBlockParam } from '@anthropic-ai/sdk/resources/index.mjs'
 

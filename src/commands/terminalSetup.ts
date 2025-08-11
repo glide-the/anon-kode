@@ -1,4 +1,4 @@
-import { Command } from '../commands'
+import { Command } from '../commandTypes'
 import { EOL, platform, homedir } from 'os'
 import { execFileNoThrow } from '../utils/execFileNoThrow'
 import chalk from 'chalk'

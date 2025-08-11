@@ -1,5 +1,5 @@
 import { last } from 'lodash-es'
-import type { Message } from '../query'
+import type { Message } from '../messageTypes'
 import { logEvent } from '../services/statsig'
 import { getLastAssistantMessageId } from './messages'
 import { ThinkTool } from '../tools/ThinkTool/ThinkTool'

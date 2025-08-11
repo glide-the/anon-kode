@@ -1,4 +1,4 @@
-import { Command } from '../commands'
+import { Command } from '../commandTypes'
 import { Help } from '../components/Help'
 import * as React from 'react'
 

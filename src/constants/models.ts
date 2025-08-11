@@ -365,7 +365,7 @@ export default {
       supports_prompt_caching: true,
       supports_system_messages: true,
       supports_tool_choice: true,
-    }
+    },
   ],
   zai: [
     {
@@ -381,7 +381,7 @@ export default {
       supports_prompt_caching: true,
       supports_system_messages: true,
       supports_tool_choice: true,
-    }
+    },
   ],
   mistral: [
     {

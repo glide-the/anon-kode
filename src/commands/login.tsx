@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { Command } from '../commands'
+import type { Command } from '../commandTypes'
 import { ConsoleOAuthFlow } from '../components/ConsoleOAuthFlow'
 import { clearTerminal } from '../utils/terminal'
 import { isLoggedInToAnthropic } from '../utils/auth'

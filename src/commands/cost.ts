@@ -1,4 +1,4 @@
-import type { Command } from '../commands'
+import type { Command } from '../commandTypes'
 import { formatTotalCost } from '../cost-tracker'
 
 const cost = {

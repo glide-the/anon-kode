@@ -1,20 +1,22 @@
-import { randomUUID, UUID } from 'crypto'
+import { randomUUID } from 'crypto'
 import { Box } from 'ink'
-import {
+import type {
   AssistantMessage,
   Message,
   ProgressMessage,
   UserMessage,
-} from '../query.js'
-import { getCommand, hasCommand } from '../commands'
+  FullToolUseResult,
+  NormalizedMessage,
+  NormalizedUserMessage,
+} from '../messageTypes'
 import { MalformedCommandError } from './errors'
 import { logError } from './log'
 import { resolve } from 'path'
 import { last, memoize } from 'lodash-es'
 import { logEvent } from '../services/statsig'
 import type { SetToolJSXFn, Tool, ToolUseContext } from '../Tool'
+import type { Command } from '../commandTypes'
 import { lastX } from '../utils/generators'
-import { NO_CONTENT_MESSAGE } from '../services/claude'
 import {
   ImageBlockParam,
   TextBlockParam,
@@ -30,7 +32,6 @@ import chalk from 'chalk'
 import * as React from 'react'
 import { UserBashInputMessage } from '../components/messages/UserBashInputMessage'
 import { Spinner } from '../components/Spinner'
-import { BashTool } from '../tools/BashTool/BashTool'
 import { ToolUseBlock } from '@anthropic-ai/sdk/resources/index.mjs'
 
 export const INTERRUPT_MESSAGE = '[Request interrupted by user]'
@@ -42,6 +43,8 @@ export const REJECT_MESSAGE =
   "The user doesn't want to proceed with this tool use. The tool use was rejected (eg. if it was a file edit, the new_string was NOT written to the file). STOP what you are doing and wait for the user to tell you how to proceed."
 export const NO_RESPONSE_REQUESTED = 'No response requested.'
 
+const NO_CONTENT_MESSAGE = '(no content)'
+
 export const SYNTHETIC_ASSISTANT_MESSAGES = new Set([
   INTERRUPT_MESSAGE,
   INTERRUPT_MESSAGE_FOR_TOOL_USE,
@@ -49,6 +52,34 @@ export const SYNTHETIC_ASSISTANT_MESSAGES = new Set([
   REJECT_MESSAGE,
   NO_RESPONSE_REQUESTED,
 ])
+
+function hasCommand(commandName: string, commands: Command[]): boolean {
+  return commands.some(
+    _ => _.userFacingName() === commandName || _.aliases?.includes(commandName),
+  )
+}
+
+function getCommand(commandName: string, commands: Command[]): Command {
+  const command = commands.find(
+    _ => _.userFacingName() === commandName || _.aliases?.includes(commandName),
+  ) as Command | undefined
+  if (!command) {
+    throw ReferenceError(
+      `Command ${commandName} not found. Available commands: ${commands
+        .map(_ => {
+          const name = _.userFacingName()
+          return _.aliases ? `${name} (aliases: ${_.aliases.join(', ')})` : name
+        })
+        .join(', ')}`,
+    )
+  }
+
+  return command
+}
+
+const loadBashTool = memoize(
+  async () => (await import('../tools/BashTool/' + 'BashTool')).BashTool,
+)
 
 function baseCreateAssistantMessage(
   content: ContentBlock[],
@@ -101,11 +132,6 @@ export function createAssistantAPIErrorMessage(
     ],
     { isApiErrorMessage: true },
   )
-}
-
-export type FullToolUseResult = {
-  data: unknown // Matches tool's `Output` type
-  resultForAssistant: ToolResultBlockParam['content']
 }
 
 export function createUserMessage(
@@ -211,6 +237,7 @@ export async function processUserInput(
       shouldHidePromptInput: false,
     })
     try {
+      const BashTool = await loadBashTool()
       const validationResult = await BashTool.validateInput({
         command: input,
       })
@@ -477,76 +504,6 @@ async function getMessagesForSlashCommand(
   }
 }
 
-export function extractTagFromMessage(
-  message: Message,
-  tagName: string,
-): string | null {
-  if (message.type === 'progress') {
-    return null
-  }
-  if (typeof message.message.content !== 'string') {
-    return null
-  }
-  return extractTag(message.message.content, tagName)
-}
-
-export function extractTag(html: string, tagName: string): string | null {
-  if (!html.trim() || !tagName.trim()) {
-    return null
-  }
-
-  // Escape special characters in the tag name
-  const escapedTag = tagName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-
-  // Create regex pattern that handles:
-  // 1. Self-closing tags
-  // 2. Tags with attributes
-  // 3. Nested tags of the same type
-  // 4. Multiline content
-  const pattern = new RegExp(
-    `<${escapedTag}(?:\\s+[^>]*)?>` + // Opening tag with optional attributes
-      '([\\s\\S]*?)' + // Content (non-greedy match)
-      `<\\/${escapedTag}>`, // Closing tag
-    'gi',
-  )
-
-  let match
-  let depth = 0
-  let lastIndex = 0
-  const openingTag = new RegExp(`<${escapedTag}(?:\\s+[^>]*?)?>`, 'gi')
-  const closingTag = new RegExp(`<\\/${escapedTag}>`, 'gi')
-
-  while ((match = pattern.exec(html)) !== null) {
-    // Check for nested tags
-    const content = match[1]
-    const beforeMatch = html.slice(lastIndex, match.index)
-
-    // Reset depth counter
-    depth = 0
-
-    // Count opening tags before this match
-    openingTag.lastIndex = 0
-    while (openingTag.exec(beforeMatch) !== null) {
-      depth++
-    }
-
-    // Count closing tags before this match
-    closingTag.lastIndex = 0
-    while (closingTag.exec(beforeMatch) !== null) {
-      depth--
-    }
-
-    // Only include content if we're at the correct nesting level
-    if (depth === 0 && content) {
-      return content
-    }
-
-    lastIndex = match.index + match[0].length
-  }
-
-  return null
-}
-
 export function isNotEmptyMessage(message: Message): boolean {
   if (message.type === 'progress') {
     return true
@@ -577,25 +534,6 @@ export function isNotEmptyMessage(message: Message): boolean {
 }
 
 // TODO: replace this with plain UserMessage if/when PR #405 lands
-type NormalizedUserMessage = {
-  message: {
-    content: [
-      | TextBlockParam
-      | ImageBlockParam
-      | ToolUseBlockParam
-      | ToolResultBlockParam,
-    ]
-    role: 'user'
-  }
-  type: 'user'
-  uuid: UUID
-}
-
-export type NormalizedMessage =
-  | NormalizedUserMessage
-  | AssistantMessage
-  | ProgressMessage
-
 // Split messages, so each content block gets its own message
 export function normalizeMessages(messages: Message[]): NormalizedMessage[] {
   return messages.flatMap(message => {

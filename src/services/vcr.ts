@@ -1,7 +1,7 @@
 import { createHash, type UUID } from 'crypto'
 import { mkdirSync, readFileSync, writeFileSync } from 'fs'
 import { dirname } from 'path'
-import type { AssistantMessage, UserMessage } from '../query'
+import type { AssistantMessage, UserMessage } from '../messageTypes'
 import { existsSync } from 'fs'
 import { env } from '../utils/env'
 import { getCwd } from '../utils/state'

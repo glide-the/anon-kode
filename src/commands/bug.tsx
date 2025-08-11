@@ -1,4 +1,4 @@
-import { Command } from '../commands'
+import { Command } from '../commandTypes'
 import { Bug } from '../components/Bug'
 import * as React from 'react'
 import { PRODUCT_NAME } from '../constants/product'

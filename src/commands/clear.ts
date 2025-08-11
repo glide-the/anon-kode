@@ -1,10 +1,10 @@
-import { Command } from '../commands'
+import { Command } from '../commandTypes'
 import { getMessagesSetter } from '../messages'
 import { getContext } from '../context'
 import { getCodeStyle } from '../utils/style'
 import { clearTerminal } from '../utils/terminal'
 import { getOriginalCwd, setCwd } from '../utils/state'
-import { Message } from '../query'
+import type { Message } from '../messageTypes'
 
 export async function clearConversation(context: {
   setForkConvoWithMessagesOnTheNextRender: (

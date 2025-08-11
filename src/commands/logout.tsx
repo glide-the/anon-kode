@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { Command } from '../commands'
+import type { Command } from '../commandTypes'
 import { getGlobalConfig, saveGlobalConfig } from '../utils/config'
 import { clearTerminal } from '../utils/terminal'
 import { Text } from 'ink'
