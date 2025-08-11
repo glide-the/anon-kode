@@ -4,30 +4,18 @@ import { Box, Text } from 'ink'
 import {
   getCurrentProjectConfig,
   getGlobalConfig,
-  saveCurrentProjectConfig,
   saveGlobalConfig,
 } from './utils/config.js'
 import { existsSync } from 'fs'
 import { join } from 'path'
-import { homedir } from 'os'
-import terminalSetup from './commands/terminalSetup'
+import { homedir, platform } from 'os'
+import { env } from './utils/env'
 import { getTheme } from './utils/theme'
 import { RELEASE_NOTES } from './constants/releaseNotes'
 import { gt } from 'semver'
 import { isDirEmpty } from './utils/file'
 import { MACRO } from './constants/macros'
 import { PROJECT_FILE, PRODUCT_NAME } from './constants/product'
-
-// Function to mark onboarding as complete
-export function markProjectOnboardingComplete(): void {
-  const projectConfig = getCurrentProjectConfig()
-  if (!projectConfig.hasCompletedProjectOnboarding) {
-    saveCurrentProjectConfig({
-      ...projectConfig,
-      hasCompletedProjectOnboarding: true,
-    })
-  }
-}
 
 function markReleaseNotesSeen(): void {
   const config = getGlobalConfig()
@@ -77,8 +65,11 @@ export default function ProjectOnboarding({
   const hasClaudeMd = existsSync(join(workspaceDir, PROJECT_FILE))
   const isWorkspaceDirEmpty = isDirEmpty(workspaceDir)
   const needsClaudeMd = !hasClaudeMd && !isWorkspaceDirEmpty
+  const terminalSetupEnabled =
+    (platform() === 'darwin' && env.terminal === 'iTerm.app') ||
+    env.terminal === 'vscode'
   const showTerminalTip =
-    terminalSetup.isEnabled && !getGlobalConfig().shiftEnterKeyBindingInstalled
+    terminalSetupEnabled && !getGlobalConfig().shiftEnterKeyBindingInstalled
 
   const theme = getTheme()
 
