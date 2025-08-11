@@ -357,7 +357,6 @@ ${commandList}`,
       'Skip all permission checks. Only works in Docker containers with no internet access. Will crash otherwise.',
       () => true,
     )
-    .showHelpOnEmpty(true)
     .action(
       async (
         prompt,
