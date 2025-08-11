@@ -6,11 +6,29 @@ import { GLOBAL_CLAUDE_FILE } from './env'
 import { getCwd } from './state'
 import { randomBytes } from 'crypto'
 import { safeParseJSON } from './json'
-import { checkGate, logEvent } from '../services/statsig'
 import { GATE_USE_EXTERNAL_UPDATER } from '../constants/betas'
 import { ConfigParseError } from './errors'
-import type { ThemeNames } from './theme'
 import { getSessionState, setSessionState } from './sessionState'
+
+export type ThemeNames =
+  | 'dark'
+  | 'light'
+  | 'light-daltonized'
+  | 'dark-daltonized'
+
+function logEvent(
+  eventName: string,
+  metadata: { [key: string]: string | undefined },
+): void {
+  import('../services/statsig').then(({ logEvent: statsigLogEvent }) =>
+    statsigLogEvent(eventName, metadata),
+  )
+}
+
+async function checkGate(gateName: string): Promise<boolean> {
+  const { checkGate: statsigCheckGate } = await import('../services/statsig')
+  return statsigCheckGate(gateName)
+}
 
 export type McpStdioServerConfig = {
   type?: 'stdio' // Optional for backwards compatibility

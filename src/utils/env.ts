@@ -1,7 +1,8 @@
-import { execFileNoThrow } from './execFileNoThrow'
 import { memoize } from 'lodash-es'
 import { join } from 'path'
 import { homedir } from 'os'
+import { access } from 'fs/promises'
+import { constants } from 'fs'
 import { CONFIG_BASE_DIR, CONFIG_FILE } from '../constants/product'
 // Base directory for all Claude Code data files (except config.json for backwards compatibility)
 export const CLAUDE_BASE_DIR =
@@ -14,12 +15,12 @@ export const GLOBAL_CLAUDE_FILE = process.env.CLAUDE_CONFIG_DIR
 export const MEMORY_DIR = join(CLAUDE_BASE_DIR, 'memory')
 
 const getIsDocker = memoize(async (): Promise<boolean> => {
-  // Check for .dockerenv file
-  const { code } = await execFileNoThrow('test', ['-f', '/.dockerenv'])
-  if (code !== 0) {
+  try {
+    await access('/.dockerenv', constants.F_OK)
+    return process.platform === 'linux'
+  } catch {
     return false
   }
-  return process.platform === 'linux'
 })
 
 const hasInternetAccess = memoize(async (): Promise<boolean> => {

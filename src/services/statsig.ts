@@ -15,8 +15,6 @@ import { getUser } from '../utils/user'
 import { logError } from '../utils/log'
 import { SESSION_ID } from '../utils/log'
 import { getBetas } from '../utils/betas'
-import { getIsGit } from '../utils/git'
-import { getSlowAndCapableModel } from '../utils/model'
 import { MACRO } from '../constants/macros'
 const gateValues: Record<string, boolean> = {}
 let client: StatsigClient | null = null
@@ -63,47 +61,43 @@ export function logEvent(
   if (env.isCI || process.env.NODE_ENV === 'test') {
     return
   }
-  Promise.all([
-    initializeStatsig(),
-    getIsGit(),
-    getBetas(),
-    metadata.model ? Promise.resolve(metadata.model) : getSlowAndCapableModel(),
-  ]).then(([statsigClient, isGit, betas, model]) => {
-    if (!statsigClient) return
+  Promise.all([initializeStatsig(), getBetas()]).then(
+    ([statsigClient, betas]) => {
+      if (!statsigClient) return
 
-    const eventMetadata: Record<string, string> = {
-      ...metadata,
-      model,
-      sessionId: SESSION_ID,
-      userType: process.env.USER_TYPE || '',
-      ...(process.env.SWE_BENCH_RUN_ID
-        ? { sweBenchId: process.env.SWE_BENCH_RUN_ID }
-        : {}),
-      ...(betas.length > 0 ? { betas: betas.join(',') } : {}),
-      env: JSON.stringify({
-        isGit,
-        platform: env.platform,
-        nodeVersion: env.nodeVersion,
-        terminal: env.terminal,
-        version: MACRO.VERSION,
-      }),
-    }
+      const eventMetadata: Record<string, string> = {
+        ...metadata,
+        model: metadata.model ?? 'unknown',
+        sessionId: SESSION_ID,
+        userType: process.env.USER_TYPE || '',
+        ...(process.env.SWE_BENCH_RUN_ID
+          ? { sweBenchId: process.env.SWE_BENCH_RUN_ID }
+          : {}),
+        ...(betas.length > 0 ? { betas: betas.join(',') } : {}),
+        env: JSON.stringify({
+          platform: env.platform,
+          nodeVersion: env.nodeVersion,
+          terminal: env.terminal,
+          version: MACRO.VERSION,
+        }),
+      }
 
-    // Debug logging when debug mode is enabled
-    if (process.argv.includes('--debug') || process.argv.includes('-d')) {
-      console.log(
-        chalk.dim(
-          `[DEBUG-ONLY] Statsig event: ${eventName} ${JSON.stringify(metadata, null, 0)}`,
-        ),
-      )
-    }
+      // Debug logging when debug mode is enabled
+      if (process.argv.includes('--debug') || process.argv.includes('-d')) {
+        console.log(
+          chalk.dim(
+            `[DEBUG-ONLY] Statsig event: ${eventName} ${JSON.stringify(metadata, null, 0)}`,
+          ),
+        )
+      }
 
-    const event: StatsigEvent = {
-      eventName,
-      metadata: eventMetadata,
-    }
-    // statsigClient.logEvent(event)
-  })
+      const event: StatsigEvent = {
+        eventName,
+        metadata: eventMetadata,
+      }
+      // statsigClient.logEvent(event)
+    },
+  )
 }
 
 export const checkGate = memoize(async (gateName: string): Promise<boolean> => {
