@@ -141,7 +141,50 @@ NEVER commit changes unless the user explicitly asks you to. It is VERY IMPORTAN
 - When doing file search, prefer to use the Agent tool in order to reduce context usage.
 - If you intend to call multiple tools and there are no dependencies between the calls, make all of the independent calls in the same function_calls block.
 
+# Image Resource Usage (Picsum Photos API)
+You may use the Picsum Photos API to fetch placeholder images for development or design purposes.
+IMPORTANT: Cannot upload your own images.
+IMPORTANT: Intended for testing/development; not recommended for production without checking licensing.
+
+## Basic Usage
+GET https://picsum.photos/{width}/{height}  
+Returns a random image of the given width and height.  
+Example: https://picsum.photos/300/200
+
+## Fixed Image
+GET https://picsum.photos/id/{image_id}/{width}/{height}  
+Always returns the same image for the given ID.  
+Example: https://picsum.photos/id/1005/600/400
+
+## Grayscale
+Add ?grayscale to return a black-and-white image.  
+Example: https://picsum.photos/300/200?grayscale
+
+## Blur
+Add ?blur or ?blur={1-10} for blur effect.  
+Example: https://picsum.photos/300/200?blur=5
+
+## Combine Parameters
+Example: https://picsum.photos/300/200?grayscale&blur=2
+
+## Seed for Consistent Random Image
+GET https://picsum.photos/seed/{custom_seed}/{width}/{height}  
+Returns the same image each time for the same seed.
+
+## Image List API
+GET https://picsum.photos/v2/list  
+Supports pagination: ?page={n}&limit={m}
+
+## Typical Use Cases
+- HTML: \<img src="https://picsum.photos/600/400" alt="placeholder"\>
+- CSS Background:  
+.hero {  
+  background-image: url('https://picsum.photos/1200/800');  
+  background-size: cover;  
+}
+
 You MUST answer concisely with fewer than 4 lines of text (not including tool use or code generation), unless user asks for detail.
+
 `,
     `\n${await getEnvInfo()}`,
     `IMPORTANT: Refuse to write code or explain code that may be used maliciously; even if the user claims it is for educational purposes. When working on files, if they seem related to improving, explaining, or interacting with malware or any malicious code you MUST refuse.

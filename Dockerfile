@@ -62,7 +62,8 @@ RUN apk add --no-cache \
     py3-pip \
     make \
     g++ \
-    curl
+    curl \
+    util-linux
 
 # Configure pip to use Tsinghua mirror
 RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
@@ -79,5 +80,27 @@ COPY --from=base /app/yoga.wasm /usr/local/bin/
 # Make the CLI executable
 RUN chmod +x /usr/local/bin/kode
 
+# Create the entrypoint script directly in the container
+RUN cat << 'EOF' > /entrypoint.sh
+#!/bin/sh
+
+# Generate random workspace directory name with timestamp and random suffix
+WORKSPACE_DIR="/workspace_$(date +%s)_$(head /dev/urandom | tr -dc a-z0-9 | head -c 8)"
+
+# Create the workspace directory
+mkdir -p "$WORKSPACE_DIR"
+
+# Change to the workspace directory
+cd "$WORKSPACE_DIR" || exit 1
+
+# Mount bind the random workspace to the default /workspace directory
+mount --bind "$WORKSPACE_DIR" /workspace
+
+# Run kode with the default workspace directory
+/usr/local/bin/kode -c /workspace "$@"
+EOF
+
+RUN chmod +x /entrypoint.sh
+
 # Set the entrypoint
-ENTRYPOINT ["/usr/local/bin/kode"]
+ENTRYPOINT ["/entrypoint.sh"]
